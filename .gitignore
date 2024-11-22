@@ -1,0 +1,8 @@
+web/dist/index.html
+web/dist/reset.css
+web/dist/style.css
+web/node_modules/
+web/package-lock.json
+views/layouts/index.html
+blog.db
+blog

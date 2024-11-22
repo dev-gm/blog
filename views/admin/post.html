@@ -1,0 +1,9 @@
+<a href="/admin/posts/delete/{{.Post.Id}}">Delete Post</a>
+<form id="update-post" action="/admin/posts/{{.Post.Id}}" method="post">
+	<button type="submit">Update Post</button>
+	<textarea name="title" type="text" rows="2">{{.Post.Post.Title}}</textarea>
+	{{if .Post.SubtitleExists}}
+	<textarea name="subtitle" type="text" rows="2">{{.Post.Post.Subtitle}}</textarea>
+	{{end}}
+	<textarea name="body" type="text" rows="100">{{.Post.Post.Body}}</textarea>
+</form>

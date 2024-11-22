@@ -1,0 +1,11 @@
+<a href="/admin/posts/new">New Post</a>
+{{range $post := .Posts}}
+<a class="admin-post" href="/admin/posts/{{.Post.Id}}">
+	<h5>{{$post.CreatedAt}}</h5>
+	<h2>{{$post.Post.Title}}</h2>
+	{{if $post.SubtitleExists}}
+	<h4>{{$post.Post.Subtitle}}</h4>
+	{{end}}
+	<a href="/admin/posts/delete/{{.Post.Id}}">Delete Post</a>
+</a>
+{{end}}

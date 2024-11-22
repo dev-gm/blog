@@ -1,0 +1,148 @@
+:root {
+	color-scheme: light dark; /* both supported */
+}
+
+html {
+	overflow-x: hidden;
+}
+
+body {
+	font-family: "Roboto";
+	font-size: 120%;
+	line-height: 120%;
+	width: 100vw;
+	color: black;
+	background-color: white;
+}
+
+@media (prefers-color-scheme: dark) {
+	body {
+		color: #ddd;
+		background-color: #141414;
+	}
+}
+
+#body-outer {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+}
+
+#body-inner {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: flex-start;
+}
+
+#admin {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+	
+} 
+
+#sidebar-outer {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-end;
+	height: 100vh;
+	position: sticky;
+	width: 30vw;
+}
+
+#sidebar-inner {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: flex-start;
+}
+
+#admin #body-outer {
+	width: 70vw;
+	height: 100vh;
+}
+
+#blog {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: flex-start;
+}
+
+#navbar-outer {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	width: 100vw;
+	padding-top: 5px;
+	position: sticky;
+}
+
+#navbar-inner {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+}
+
+#blog #body-outer {
+	width: 100vw;
+}
+
+a {
+	padding: 5px;
+}
+
+a:hover {
+	background-color: #ddd;
+}
+
+@media (prefers-color-scheme: dark) {
+	a:hover {
+		background-color: #222;
+	}
+
+	#navbar-outer, #sidebar-outer {
+		background-color: #141414;
+	}
+}
+
+@media screen and (max-width: 950px) {
+	#blog #body-inner {
+		width: 100vw;
+	}
+
+	#navbar-inner {
+		width: 100vw;
+	}
+}
+
+@media screen and (min-width: 950px) and (max-width: 1250px) {
+	#blog #body-inner {
+		width: 75vw;
+	}
+
+	#navbar-inner {
+		width: 85vw;
+	}
+}
+
+@media screen and (min-width: 1250px) {
+	#blog #body-inner {
+		width: 55vw;
+	}
+
+	#navbar-inner {
+		width: 70vw;
+	}
+}
+
+#blog #posts a {
+	margin-top: 15px;
+}
+
+#blog #post {
+	padding: 25px 5px;
+}
+
+#blog #post article {
+	margin-top: 20px;
+	line-height: 150%;
+}
