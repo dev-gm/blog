@@ -349,8 +349,8 @@ func RetrieveData() error {
 func RetrieveDataFromSocket() {
 	RetrieveData()
 
-	os.Remove("site.sock")
-	socket, err := net.Listen("unix", "site.sock")
+	os.Remove("data/site.sock")
+	socket, err := net.Listen("unix", "data/site.sock")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -359,7 +359,7 @@ func RetrieveDataFromSocket() {
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 	go func() {
 		<-c
-		os.Remove("site.sock")
+		os.Remove("data/site.sock")
 		os.Exit(1)
 	}()
 
