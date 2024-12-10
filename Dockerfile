@@ -1,7 +1,7 @@
 FROM node:alpine AS builder
 
 WORKDIR /usr/local/blog
-COPY ./web .
+COPY ./web/* .
 
 RUN npm install
 RUN npm run build
