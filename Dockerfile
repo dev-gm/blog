@@ -1,6 +1,6 @@
 FROM node:alpine AS builder
 
-COPY ./web /usr/local/web
+COPY web /usr/local/web
 WORKDIR /usr/local/web
 
 RUN npm install
@@ -10,11 +10,8 @@ FROM golang:alpine
 USER guest
 
 WORKDIR /home/guest
-COPY go.mod .
-COPY go.sum .
-COPY main.go .
-COPY ./views ./views
-COPY --from=builder /usr/local/web/dist/index.html ./views/nested/index.html
+COPY go.mod go.sum main.go views .
+COPY --from=builder /usr/local/web/dist/index.html views/nested/index.html
 
 EXPOSE 3000
 
