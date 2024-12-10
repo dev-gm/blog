@@ -6,18 +6,16 @@ COPY ./web .
 RUN npm install
 RUN npm run build
 
-FROM golang:bookworm
+FROM golang:alpine
 
-RUN useradd -m blog
+USER guest
 
-USER blog
-
-WORKDIR /home/blog
+WORKDIR /home/guest
 COPY go.mod .
 COPY go.sum .
 COPY main.go .
 COPY ./views ./views
-COPY --from-builder /usr/local/blog/web/dist/index.html ./views/nested/index.html
+COPY --from=builder /usr/local/blog/web/dist/index.html ./views/nested/index.html
 
 EXPOSE 3000
 
