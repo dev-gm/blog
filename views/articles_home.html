@@ -1,0 +1,8 @@
+{{range $article := .AllArticles}}
+{{if not $article.Series}}
+	<a class="rm" href="{{$article.Url}}">
+		<p>{{$article.Date}}</p>
+		<h2>{{$article.Title}}</h2>
+	</a>
+{{end}}
+{{end}}

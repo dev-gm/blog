@@ -1,0 +1,26 @@
+{{range $series := .AllSeries}}
+	<div class="series">
+		<input id="{{$series.Path}}" type="checkbox" />
+		<label for="{{$series.Path}}">
+			<p>updated: {{$series.Date}}</p>
+			<h2>{{$series.Title}}</h2>
+			{{if $series.Description}}
+				<h4>{{$series.Description}}</h4>
+			{{end}}
+		</label>
+		{{range $article := $series.Parts}}
+			<a class="rm" href="{{$article.Url}}">
+				<p>{{$article.Date}}</p>
+				<h2>{{$article.Title}}</h2>
+			</a>
+		{{end}}
+	</div>
+{{end}}
+<script>
+if (location.hash.length > 0) {
+	var _checkbox = document.getElementById(location.hash.slice(1));
+	if (_checkbox) {
+		_checkbox.checked = true;
+	}
+}
+</script>

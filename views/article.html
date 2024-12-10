@@ -1,0 +1,60 @@
+<div id="info">
+	<p>
+		{{if .Article.Series}}
+			{{.Article.Series.Title}}&nbsp;-&nbsp;
+		{{end}}
+		{{.Article.Date}}
+	</p>
+	<h1>{{.Article.Title}}</h1>
+{{if .Article.Subtitle}}
+	<h4>{{.Article.Subtitle}}</h4>
+{{end}}
+</div>
+{{if .Article.Series}}
+<div id="series">
+	{{$article_path := .Article.Path}}
+	{{range $part := .Article.Series.Parts}}
+		<a href="{{$part.Url}}" class="part rm {{if eq $article_path $part.Path}}selected{{end}}">
+			<span>{{$part.Date}}</span><br />
+			<span>{{$part.Title}}</span>
+		</a>
+	{{end}}
+</div>
+{{end}}
+<article id="body">
+	{{.Article.HTMLBody}}
+	<script async src="/assets/mathjax/tex-mml-chtml.js"></script>
+	<script async>
+		var toc = document.querySelectorAll("#body nav a");
+		toc.forEach((e) => {
+			e.addEventListener("click", () => {
+				toc.forEach((e2) => {
+					e2.classList.remove("active");
+				});
+				e.classList.add("active");
+			});
+		});
+		var headings = toc.values().map((e) => document.getElementById(e.href.split("#").slice(-1))).toArray();
+		var observer = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					const index = headings.findIndex(item => item.id === entry.target.id)
+					toc.forEach((e) => {
+						e.classList.remove("active");
+					})
+					toc[index].classList.add("active");
+					toc[index].scrollIntoView({
+						block: "nearest"
+					});
+				}
+			})
+		}, {
+			rootMargin: "-30px 0% -77%",
+			threshold: 1
+		});
+		headings.forEach((h) => observer.observe(h));
+	</script>
+	<link rel="stylesheet" type="text/css" href="/assets/hljs-themes/tomorrow-night.css" media="screen" />
+	<script src="/assets/hljs/highlight.min.js"></script>
+	<script>hljs.highlightAll();</script>
+</article>

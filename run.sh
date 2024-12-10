@@ -1,4 +1,3 @@
-rm blog.db
 cd web
 npm run build
 cd ..

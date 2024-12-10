@@ -1,0 +1,20 @@
+[
+	{
+		"title": "series 1",
+		"description": "description 1",
+		"dirname": "series-1",
+		"parts": [
+			{
+				"title": "part 1",
+				"subtitle": "subtitle for part 1",
+				"datetime": "2024-12-05",
+				"filename": "part-1.md"
+			},
+			{
+				"title": "part 2",
+				"datetime": "2024-12-06",
+				"filename": "part-2.md"
+			}
+		]
+	}
+]

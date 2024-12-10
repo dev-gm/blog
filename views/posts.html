@@ -1,9 +1,0 @@
-{{range $post := .Posts}}
-<a href="/{{$post.Post.Url}}" hx-swap="innerHTML show:window:top">
-	<h6>{{$post.CreatedAt}}</h6>
-	<h2>{{$post.Post.Title}}</h2>
-	{{if $post.SubtitleExists}}
-		<h4>{{$post.Post.Subtitle}}</h4>
-	{{end}}
-</a>
-{{end}}

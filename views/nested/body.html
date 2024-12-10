@@ -1,4 +1,19 @@
 <title>{{.PageTitle}}</title>
-<div id="body-inner" class="{{.PageType}}-{{.Page}}">
+<nav>
+	<div id="left">
+		<a href="/">{{.NavHome}}</a> 
+		<a href="/articles">articles</a> 
+		<a href="/series">series</a>
+	</div>
+	<div id="right">
+		{{range $link := .NavLinks}}
+		<a class="rm" href="{{$link.Href}}">
+			<span>{{$link.Text}}</span>
+			<img src="{{$link.ImageSrc}}" alt="{{$link.ImageAltText}}" />
+		</a>
+		{{end}}
+	</div>
+</nav>
+<div id="{{.PageId}}" class="body-inner">
 	{{embed}}
 </div>

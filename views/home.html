@@ -1,0 +1,15 @@
+{{range $article := .AllArticles}}
+<div class="article">
+	{{if $article.Series}}
+	<a class="series-label rm" href="/series#{{$article.Series.Path}}">{{$article.Series.Title}}</a>
+	{{end}}
+	<a class="link rm" href="{{$article.Url}}">
+		<p>{{$article.Date}}</p>
+		<h2>{{$article.Title}}</h2>
+	</a>
+	<a class="link-flow rm">
+		<p>{{$article.Date}}</p>
+		<h2>{{$article.Title}}</h2>
+	</a>
+</div>
+{{end}}

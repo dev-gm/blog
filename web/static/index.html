@@ -3,12 +3,12 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="../dist/reset.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="../dist/style.css" media="screen" />
-	<script src="../dist/htmx.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+	<script async src="htmx.min.js"></script>
 	<title>{{.PageTitle}}</title>
+	<link rel="icon" href="/favicon.ico" type="image/x-icon">
 </head>
-<body id="{{.PageType}}" hx-boost="true">
+<body hx-boost="true" hx-swap="innerHTML show:window:top">
 	{{embed}}
 </body>
 </html>

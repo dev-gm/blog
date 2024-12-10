@@ -3,12 +3,11 @@
     "autoprefixer": "^10.4.20",
     "css-loader": "^7.1.2",
     "html-bundler-webpack-plugin": "^4.1.2",
-    "postcss": "^8.4.47",
     "webpack": "^5.95.0",
     "webpack-cli": "^5.1.4"
   },
   "scripts": {
-    "build": "npx postcss-cli --base static static/*.css --dir dist; npx webpack --config webpack.config.js"
+    "build": "npx webpack --config webpack.config.js"
   },
   "dependencies": {
     "98.css": "^0.1.20"
