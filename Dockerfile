@@ -3,16 +3,17 @@ FROM node:alpine AS builder
 COPY web /usr/local/web
 WORKDIR /usr/local/web
 
-RUN npm install
-RUN npm run build
+RUN npm install && npm run build
+
 
 FROM golang:alpine
-USER guest
 
+USER guest
 WORKDIR /home/guest
+
 COPY go.mod go.sum main.go views .
 COPY --from=builder /usr/local/web/dist/index.html views/nested/index.html
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "go build . && ./blog"]
+CMD go build . && ./blog
