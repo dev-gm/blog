@@ -99,7 +99,7 @@ var allSeries []Series
 
 func ServePage(c *fiber.Ctx, title string, data fiber.Map) error {
 	title = "views/" + title
-	maps.Insert(data, maps.All(settings))
+	data["Settings"] = &settings
 	if htmx.IsHTMX(c) {
 		htmx.NewResponse().Retarget("body").Write(c)
 		return c.Status(200).Render(title, data, "views/nested/body")
@@ -352,6 +352,11 @@ func RetrieveDataFromSocket() {
 
 	os.Remove("data/site.sock")
 	socket, err := net.Listen("unix", "data/site.sock")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	os.Chmod("data/site.sock", 0o777)
 	if err != nil {
 		log.Fatal(err)
 	}

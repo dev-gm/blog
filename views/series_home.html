@@ -5,7 +5,7 @@
 			<p>updated: {{$series.Date}}</p>
 			<h2>{{$series.Title}}</h2>
 			{{if $series.Description}}
-				<h4>{{$series.Description}}</h4>
+				<p>{{$series.Description}}</p>
 			{{end}}
 		</label>
 		{{range $article := $series.Parts}}

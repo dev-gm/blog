@@ -3,13 +3,13 @@
 	<div id="left">
 		<a id="title" href="/">
 			<img src="/assets/favicon.ico" />
-			<span>{{.NavHome}}</span>
+			<span>{{.Settings.NavHome}}</span>
 		</a> 
 		<a href="/articles">articles</a> 
 		<a href="/series">series</a>
 	</div>
 	<div id="right">
-		{{range $link := .NavLinks}}
+		{{range $link := .Settings.NavLinks}}
 		<a href="{{$link.Href}}">
 			<span>{{$link.Text}}</span>
 			<img src="{{$link.ImageSrc}}" alt="{{$link.ImageAltText}}" />

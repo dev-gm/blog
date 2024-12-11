@@ -7,7 +7,7 @@
 	</p>
 	<h1>{{.Article.Title}}</h1>
 {{if .Article.Subtitle}}
-	<h4>{{.Article.Subtitle}}</h4>
+	<p>{{.Article.Subtitle}}</p>
 {{end}}
 </div>
 {{if .Article.Series}}
@@ -23,7 +23,6 @@
 {{end}}
 <article id="body">
 	{{.Article.HTMLBody}}
-	<script async src="/assets/mathjax/tex-mml-chtml.js"></script>
 	<script async>
 		var toc = document.querySelectorAll("#body nav a");
 		toc.forEach((e) => {
@@ -54,7 +53,19 @@
 		});
 		headings.forEach((h) => observer.observe(h));
 	</script>
-	<link rel="stylesheet" type="text/css" href="/assets/hljs-themes/tomorrow-night.css" media="screen" />
-	<script src="/assets/hljs/highlight.min.js"></script>
-	<script>hljs.highlightAll();</script>
+	<style>
+@font-face {
+	font-family: DejaVuSansMono;
+	src: url("/assets/fonts/DejaVu/DejaVuSansMono.ttf");
+}
+
+code {
+	font-family: DejaVuSansMono !important;
+	font-size: 1rem !important;
+}
+	</style>
+	<link rel="stylesheet" type="text/css" href="/assets/hljs/themes/tomorrow-night.css" media="screen" />
+	<script defer="defer" src="/assets/hljs/highlight.min.js"></script>
+	<script defer="defer">hljs.highlightAll();</script>
+	<script defer="defer" src="/assets/mathjax/tex-mml-chtml.js"></script>
 </article>
