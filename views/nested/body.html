@@ -1,12 +1,12 @@
 <title>{{.PageTitle}}</title>
 <nav>
 	<div id="left">
-		<a id="title" href="/">
+		<a class="rm" id="title" href="/">
 			<img src="/assets/favicon.ico" />
 			<span>{{.Settings.NavHome}}</span>
 		</a> 
-		<a href="/articles">articles</a> 
-		<a href="/series">series</a>
+		<a class="rm" href="/articles">articles</a> 
+		<a class="rm" href="/series">series</a>
 	</div>
 	<div id="right">
 		{{range $link := .Settings.NavLinks}}

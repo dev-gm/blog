@@ -59,8 +59,13 @@ code {
 	font-size: 1rem !important;
 }
 	</style>
-	<link rel="stylesheet" type="text/css" href="/assets/hljs/themes/tomorrow-night.css" media="screen" />
-	<script defer="defer" src="/assets/hljs/highlight.min.js"></script>
-	<script defer="defer">hljs.highlightAll();</script>
+	<link rel="stylesheet" type="text/css" href="/assets/highlightjs/styles/vs2015.min.css" media="screen" />
+	<script defer="defer">
+		document.querySelectorAll('pre>code').forEach((codeEl) => {
+			const worker = new Worker('/assets/worker.js');
+			worker.onmessage = (event) => { codeEl.innerHTML = event.data; }
+			worker.postMessage(codeEl.textContent);
+		});
+	</script>
 	<script defer="defer" src="/assets/mathjax/tex-mml-chtml.js"></script>
 </article>

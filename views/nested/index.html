@@ -31,6 +31,12 @@ a.rm, body>nav #right a {
 	color: inherit;
 }
 
+pre {
+	color: #dedede;
+	padding: 1.15rem;
+	background-color: #222 !important;
+}
+
 body>nav {
 	display: flex;
 	flex-flow: row nowrap;
@@ -46,8 +52,7 @@ body>nav #left #title {
 }
 
 body>nav #left a {
-	margin-right: 25px;
-	text-decoration-line: underline !important;
+	margin-right: 2rem;
 }
 
 body>nav a::after {
@@ -285,7 +290,6 @@ body:not(#article) p {
 
 #article #series a {
 	border: 1px solid black;
-	text-decoration: none;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -297,7 +301,6 @@ body:not(#article) p {
 #article #series a.part {
 	margin: 0;
 	width: 100%;
-	color: VisitedText !important;
 }
 
 #article #series a.selected {
@@ -325,11 +328,16 @@ body:not(#article) p {
 	margin-bottom: 100px;
 }
 
+#article #body a {
+	padding: 0;
+}
+
 #article #body nav {
 	border: 1px solid black;
 	position: fixed;
 	top: 25px;
 	right: 5vw;
+	padding: 0;
 	height: max-content;
 }
 
@@ -337,10 +345,6 @@ body:not(#article) p {
 	#article #body nav {
 		border: 1px solid #dedede !important;
 	}
-}
-
-#article #body a {
-	color: VisitedText !important;
 }
 
 #article #body nav a.active {
@@ -359,14 +363,23 @@ body:not(#article) p {
 	}
 }
 
+#article #body nav {
+	padding: calc(1em - 6px) 1em 1em 0;
+}
+
 #article #body nav ul {
-	list-style: none;;
-	padding-left: 23px;
-	padding-right: 10px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	padding-left: 1em;
 }
 
 #article #body nav li {
-	padding: 6px 0;
+	padding-top: 6px;
+}
+
+#article #body nav a {
+	padding: 0;
 }
 
 #article #body nav a:hover {
