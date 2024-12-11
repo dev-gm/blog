@@ -3,18 +3,23 @@ package main
 import (
 	"embed"
 	"encoding/json"
+	"html/template"
 	"log"
+	"maps"
 	"net"
 	"net/http"
 	"os"
 	"os/signal"
 	"slices"
-	"syscall"
 	"strings"
 	"sync"
-	"maps"
+	"syscall"
 	"time"
-	"html/template"
+
+	
+	"github.com/gomarkdown/markdown"
+	mdHtml "github.com/gomarkdown/markdown/html"
+	"github.com/gomarkdown/markdown/parser"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cache"
@@ -22,9 +27,6 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"github.com/gofiber/helmet/v2"
 	"github.com/gofiber/template/html/v2"
-	"github.com/gomarkdown/markdown"
-	mdHtml "github.com/gomarkdown/markdown/html"
-	"github.com/gomarkdown/markdown/parser"
 	"github.com/sopa0/htmx-fiber"
 )
 
@@ -396,9 +398,16 @@ func main() {
 
 	app.Use(helmet.New())
 	app.Use(cache.New(cache.Config{
-		Next: func(c *fiber.Ctx) bool {
-			return htmx.IsHTMX(c)
+		KeyGenerator: func(c *fiber.Ctx) string {
+			if htmx.IsHTMX(c) {
+				return "H--" + strings.Clone(c.Path())
+			} else {
+				return "N--" + strings.Clone(c.Path())
+			}
 		},
+		Expiration: 20 * time.Minute,
+		CacheControl: true,
+		StoreResponseHeaders: true,
 	}))
 	app.Use("/assets", filesystem.New(filesystem.Config{
 		Root: http.FS(assetsDir),
@@ -415,3 +424,5 @@ func main() {
 
 	log.Fatal(app.Listen(":3000"))
 }
+
+

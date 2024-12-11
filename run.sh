@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -x
+
 cd web
 npm install
 npm run build
