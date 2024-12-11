@@ -19,7 +19,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cache"
 	"github.com/gofiber/fiber/v2/middleware/earlydata"
-	"github.com/gofiber/fiber/v2/middleware/favicon"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"github.com/gofiber/helmet/v2"
 	"github.com/gofiber/template/html/v2"
@@ -400,11 +399,6 @@ func main() {
 		Next: func(c *fiber.Ctx) bool {
 			return htmx.IsHTMX(c)
 		},
-	}))
-	app.Use(favicon.New(favicon.Config{
-		File: "data/assets/favicon.ico",
-		URL: "/favicon.ico",
-		FileSystem: http.FS(assetsDir),
 	}))
 	app.Use("/assets", filesystem.New(filesystem.Config{
 		Root: http.FS(assetsDir),
