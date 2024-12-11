@@ -12,7 +12,8 @@
 		{{range $link := .Settings.NavLinks}}
 		<a href="{{$link.Href}}">
 			<span>{{$link.Text}}</span>
-			<img src="{{$link.ImageSrc}}" alt="{{$link.ImageAltText}}" />
+			<img class="dark" src="{{$link.ImageSrcDark}}" alt="{{$link.ImageAltText}}" />
+			<img class="light" src="{{$link.ImageSrcLight}}" alt="{{$link.ImageAltText}}" />
 		</a>
 		{{end}}
 	</div>

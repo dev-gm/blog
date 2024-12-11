@@ -18,16 +18,12 @@ body {
 	font-size: 115%;
 	line-height: 120%;
 	height: 100vh;
-	color: #ddd;
+	color: black;
 	position: relative;
 }
 
 .body-inner {
 	margin-top: 10px;
-}
-
-a {
-	color: VisitedText;
 }
 
 a.rm, body>nav #right a {
@@ -94,21 +90,39 @@ body>nav #right a {
 	justify-content: flex-start;
 }
 
+body>nav #right img.dark {
+	display: none;
+}
+
 a, label {
 	padding: 5px;
+	color: black;
 }
 	
 a.rm:hover, label:hover, body>nav a:hover {
-	background-color: #ddd;
+	background-color: #dedede;
 }
 
 @media (prefers-color-scheme: dark) {
 	a.rm:hover, label:hover, body>nav a:hover {
-		background-color: #353535;
+		background-color: #353535 !important;
 	}
 
 	body {
-		background-color: #191919
+		background-color: #151515 !important;
+		color: #dedede !important;
+	}
+
+	a, label {
+		color: #dedede !important;
+	}
+
+	body>nav #right img.light {
+		display: none !important;
+	}
+
+	body>nav #right img.dark {
+		display: block !important;
 	}
 }
 
@@ -272,28 +286,33 @@ body:not(#article) p {
 #article #series a {
 	border: 1px solid black;
 	text-decoration: none;
-	color: VisitedText;
 }
 
 @media (prefers-color-scheme: dark) {
 	#article #series a {
-		border: 1px solid #ddd;
+		border: 1px solid #dedede !important;
 	}
 }
 
 #article #series a.part {
 	margin: 0;
 	width: 100%;
+	color: VisitedText !important;
 }
 
-#article #series .selected {
-	font-weight: bold;
-	color: black;
+#article #series a.selected {
+	font-weight: bolder;
+}
+
+@media (prefers-color-scheme: light) {
+	#article #series a.selected {
+		color: black !important;
+	}
 }
 
 @media (prefers-color-scheme: dark) {
-	#article #series .selected {
-		color: #ddd
+	#article #series a.selected {
+		color: #dedede !important;
 	}
 }
 
@@ -311,18 +330,27 @@ body:not(#article) p {
 
 @media (prefers-color-scheme: dark) {
 	#article #body nav {
-		border: 1px solid #ddd;
+		border: 1px solid #dedede !important;
 	}
+}
+
+#article #body a {
+	color: VisitedText !important;
 }
 
 #article #body nav a.active {
 	font-weight: bolder;
-	color: black;
+}
+
+@media (prefers-color-scheme: light) {
+	#article #body nav a.active {
+		color: black !important;
+	}
 }
 
 @media (prefers-color-scheme: dark) {
 	#article #body nav a.active {
-		color: #ddd;
+		color: #dedede !important;
 	}
 }
 

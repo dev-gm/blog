@@ -33,7 +33,8 @@ import (
 type NavLink struct {
 	Href string
 	Text string
-	ImageSrc string
+	ImageSrcDark string
+	ImageSrcLight string
 	ImageAltText string
 }
 
@@ -43,13 +44,15 @@ var settings = fiber.Map{
 		{
 			Href: "https://codeberg.org/dev-gm",
 			Text: "dev-gm",
-			ImageSrc: "/assets/icons/codeberg.svg",
+			ImageSrcDark: "/assets/icons/codeberg.svg",
+			ImageSrcLight: "/assets/icons/codeberg-blue.svg",
 			ImageAltText: "cb",
 		},
 		{
 			Href: "https://github.com/dev-gm",
 			Text: "dev-gm",
-			ImageSrc: "/assets/icons/github.svg",
+			ImageSrcDark: "/assets/icons/github.svg",
+			ImageSrcLight: "/assets/icons/github.svg",
 			ImageAltText: "gh",
 		},
 	},
@@ -427,7 +430,7 @@ func main() {
 	app.Get("/series", ServeSeriesHome)
 	app.Get("/series/:series/:article", ServeSeriesArticle)
 
-	log.Fatal(app.Listen(":8080"))
+	log.Fatal(app.Listen(":8081"))
 }
 
 
