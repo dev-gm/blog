@@ -6,14 +6,11 @@ import (
 	"html/template"
 	"log"
 	"maps"
-	"net"
 	"net/http"
 	"os"
-	"os/signal"
 	"slices"
 	"strings"
 	"sync"
-	"syscall"
 	"time"
 
 	
@@ -267,7 +264,7 @@ func (raw *RawSeries) ToSeries() Series {
 	return series
 }
 
-func RetrieveData() error {
+func UpdateData() error {
 	articles_content, err := os.ReadFile("data/articles.json")
 	if err != nil {
 		log.Println("Failed to read articles.json")
@@ -347,59 +344,26 @@ func RetrieveData() error {
 		})
 	}
 
+	log.Print("Updated data successfully")
+
 	return nil
 }
 
-func RetrieveDataFromSocket() {
-	RetrieveData()
-
-	os.Remove("data/site.sock")
-	socket, err := net.Listen("unix", "data/site.sock")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	os.Chmod("data/site.sock", 0o777)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
-	go func() {
-		<-c
-		os.Remove("data/site.sock")
-		os.Exit(1)
-	}()
-
-	for {
-		conn, err := socket.Accept()
-		if err != nil {
-			log.Println(err)
-			continue
-		}
-
-		go func(conn net.Conn) {
-			buf := make([]byte, 16)
-
-			n, err := conn.Read(buf)
-			if err != nil {
-				log.Println(err)
-				return
-			}
-
-			conn.Close()
-
-			if string(buf[:n]) == "reload" {
-				RetrieveData()
-			}
-		}(conn)
-	}
-}
-
 func main() {
-	go RetrieveDataFromSocket()
-	
+	go UpdateData()
+
+	control := fiber.New()
+	control.All("/", func(c *fiber.Ctx) error {
+		err := UpdateData()
+		if err != nil {
+			c.SendStatus(500)
+			return c.SendString("Failed to update data")
+		}
+		c.SendStatus(200)
+		return c.SendString("Updated data successfully")
+	})
+	go control.Listen(":8081")
+
 	app := fiber.New(fiber.Config{
 		Views: html.NewFileSystem(http.FS(viewsDir), ".html"),
 	})
@@ -430,7 +394,7 @@ func main() {
 	app.Get("/series", ServeSeriesHome)
 	app.Get("/series/:series/:article", ServeSeriesArticle)
 
-	log.Fatal(app.Listen(":8081"))
+	log.Fatal(app.Listen(":8080"))
 }
 
 

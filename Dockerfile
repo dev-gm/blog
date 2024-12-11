@@ -14,5 +14,6 @@ WORKDIR /home/guest
 COPY --from=build /blog/blog ./blog
 
 EXPOSE 8080
+EXPOSE 8081
 
 CMD ["./blog"]
