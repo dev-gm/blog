@@ -1,0 +1,10 @@
+version: '3.9'
+services:
+  site:
+    build: ./
+    container_name: blog_site
+    restart: unless-stopped
+    volumes:
+      - ./data:/home/guest/data
+    ports:
+      - 80:8080

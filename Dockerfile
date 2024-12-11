@@ -1,11 +1,18 @@
-FROM golang:alpine
+FROM golang:alpine as build
+
+WORKDIR /blog
+
+COPY . .
+
+RUN go mod download && go build -o blog
+
+FROM alpine:latest
 
 USER guest
 WORKDIR /home/guest
 
-COPY go.mod go.sum main.go views .
-COPY data/assets data/assets
+COPY --from=build /blog/blog ./blog
 
-EXPOSE 3000
+EXPOSE 8080
 
-CMD go run .
+CMD ["./blog"]
