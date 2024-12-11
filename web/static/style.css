@@ -32,7 +32,7 @@ body>nav {
 }
 
 body>nav #left a {
-	margin-right: 15px;
+	margin-right: 25px;
 	text-decoration-line: underline !important;
 }
 
@@ -53,8 +53,15 @@ body>nav #right {
 }
 
 body>nav img {
-	padding: 5px;
 	height: 1em;
+}
+
+body>nav #left img {
+	padding: 9px;
+}
+
+body>nav #right img {
+	padding: 3px;
 }
 
 body>nav #right a>span {
