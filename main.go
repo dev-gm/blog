@@ -19,8 +19,8 @@ import (
 	"github.com/gomarkdown/markdown/parser"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cache"
 	"github.com/gofiber/fiber/v2/middleware/earlydata"
+	"github.com/gofiber/fiber/v2/middleware/etag"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"github.com/gofiber/helmet/v2"
 	"github.com/gofiber/template/html/v2"
@@ -207,8 +207,12 @@ func MdToArticle(md []byte) []byte {
 
 func (raw *RawArticle) ToArticle(series *Series) Article {
 	layout := "2006-01-02 15:04"
+	if !strings.Contains(raw.Datetime, " ") {
+		layout = "2006-01-02"
+	}
 	datetime, err := time.Parse(layout, raw.Datetime)
 	if err != nil {
+		log.Printf("Failed to parse datetime for article: %s", raw.Title)
 		datetime = time.Now()
 	}
 	path := PathFromTitle(raw.Title)
@@ -240,9 +244,14 @@ func (raw *RawArticle) ToArticle(series *Series) Article {
 }
 
 func (raw *RawSeries) ToSeries() Series {
-	layout := "2006-01-02 15:04"
+	var layout string
 	timestamp := int64(0)
 	for _, part := range raw.Parts {
+		if strings.Contains(part.Datetime, " ") {
+			layout = "2006-01-02 15:04"
+		} else {
+			layout = "2006-01-02"
+		}
 		part_dt, err := time.Parse(layout, part.Datetime)
 		if err != nil {
 			continue
@@ -250,6 +259,7 @@ func (raw *RawSeries) ToSeries() Series {
 		timestamp = max(timestamp, part_dt.UnixMilli())
 	}
 	if timestamp == 0 {
+		log.Printf("Failed to get timestamp for series: %s", raw.Title)
 		timestamp = time.Now().UnixMilli()
 	}
 	path := PathFromTitle(raw.Title)
@@ -340,7 +350,7 @@ func UpdateData() error {
 			article_ptr.Series = &allSeries[i]
 		}
 		slices.SortStableFunc(allSeries[i].Parts, func(a1, a2 *Article) int {
-			return int(a2.UnixMillis - a1.UnixMillis)
+			return int(a1.UnixMillis - a2.UnixMillis)
 		})
 	}
 
@@ -369,17 +379,8 @@ func main() {
 	})
 
 	app.Use(helmet.New())
-	app.Use(cache.New(cache.Config{
-		KeyGenerator: func(c *fiber.Ctx) string {
-			if htmx.IsHTMX(c) {
-				return "H--" + strings.Clone(c.Path())
-			} else {
-				return "N--" + strings.Clone(c.Path())
-			}
-		},
-		Expiration: 20 * time.Minute,
-		CacheControl: true,
-		StoreResponseHeaders: true,
+	app.Use(etag.New(etag.Config{
+		Weak: true,
 	}))
 	app.Use("/assets", filesystem.New(filesystem.Config{
 		Root: http.FS(assetsDir),
@@ -394,5 +395,5 @@ func main() {
 	app.Get("/series", ServeSeriesHome)
 	app.Get("/series/:series/:article", ServeSeriesArticle)
 
-	log.Fatal(app.Listen(":8080"))
+	log.Fatal(app.Listen(":8083"))
 }

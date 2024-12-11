@@ -5,8 +5,18 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style>
 @font-face {
-	font-family: Inter;
-	src: url("/assets/fonts/Inter/Inter-VariableFont_opsz,wght.ttf");
+	font-family: Roboto;
+	src: url("/assets/fonts/Roboto/Roboto-Regular.ttf");
+}
+
+@font-face {
+	font-family: Roboto-bold;
+	src: url("/assets/fonts/Roboto/Roboto-Bold.ttf");
+}
+
+@font-face {
+	font-family: Roboto-black;
+	src: url("/assets/fonts/Roboto/Roboto-Black.ttf");
 }
 
 :root {
@@ -14,7 +24,7 @@
 }
 
 body {
-	font-family: Inter;
+	font-family: Roboto;
 	font-size: 115%;
 	line-height: 120%;
 	height: 100vh;
@@ -24,6 +34,7 @@ body {
 
 .body-inner {
 	margin-top: 10px;
+	margin-bottom: 150px;
 }
 
 a.rm, body>nav #right a {
@@ -32,7 +43,7 @@ a.rm, body>nav #right a {
 }
 
 pre {
-	color: #dedede;
+	color: #ccc;
 	padding: 1.15rem;
 	background-color: #222 !important;
 }
@@ -105,21 +116,21 @@ a, label {
 }
 	
 a.rm:hover, label:hover, body>nav a:hover {
-	background-color: #dedede;
+	background-color: #ccc;
 }
 
 @media (prefers-color-scheme: dark) {
 	a.rm:hover, label:hover, body>nav a:hover {
-		background-color: #353535 !important;
+		background-color: #232323 !important;
 	}
 
 	body {
 		background-color: #151515 !important;
-		color: #dedede !important;
+		color: #ccc !important;
 	}
 
 	a, label {
-		color: #dedede !important;
+		color: #ccc !important;
 	}
 
 	body>nav #right img.light {
@@ -168,7 +179,7 @@ body:not(#article) p {
 }
 
 #home .article {
-	margin-top: 15px;
+	margin-top: 0.65rem;
 	position: relative;
 	width: 100%;
 }
@@ -193,10 +204,7 @@ body:not(#article) p {
 	visibility: hidden;
 }
 
-#home .link * {
-	margin: 0.5em 0;
-}
-
+#home .link *,
 #home .link-flow *,
 #home-series label *,
 #home-series a *,
@@ -219,7 +227,7 @@ body:not(#article) p {
 #home-series label {
 	width: 100%;
 	cursor: pointer;
-	margin-top: 10px;
+	margin-top: 0.65rem;
 }
 
 #home-series input,
@@ -247,7 +255,7 @@ body:not(#article) p {
 }
 
 #home-articles a {
-	margin-bottom: 10px;
+	margin-bottom: 0.65rem;
 }
 
 #article {
@@ -294,7 +302,7 @@ body:not(#article) p {
 
 @media (prefers-color-scheme: dark) {
 	#article #series a {
-		border: 1px solid #dedede !important;
+		border: 1px solid #ccc !important;
 	}
 }
 
@@ -304,7 +312,7 @@ body:not(#article) p {
 }
 
 #article #series a.selected {
-	font-weight: bolder;
+	font-family: Roboto-black;
 }
 
 #article #series a.selected:hover {
@@ -320,22 +328,20 @@ body:not(#article) p {
 
 @media (prefers-color-scheme: dark) {
 	#article #series a.selected {
-		color: #dedede !important;
+		color: #ccc !important;
 	}
-}
-
-#article #body {
-	margin-bottom: 100px;
 }
 
 #article #body a {
 	padding: 0;
+	text-decoration-line: revert;
+	color: default;
 }
 
 #article #body nav {
 	border: 1px solid black;
 	position: fixed;
-	top: 25px;
+	top: 3em;
 	right: 5vw;
 	padding: 0;
 	height: max-content;
@@ -343,12 +349,12 @@ body:not(#article) p {
 
 @media (prefers-color-scheme: dark) {
 	#article #body nav {
-		border: 1px solid #dedede !important;
+		border: 1px solid #ccc !important;
 	}
 }
 
 #article #body nav a.active {
-	font-weight: bolder;
+	font-family: Roboto-black;
 }
 
 @media (prefers-color-scheme: light) {
@@ -359,12 +365,12 @@ body:not(#article) p {
 
 @media (prefers-color-scheme: dark) {
 	#article #body nav a.active {
-		color: #dedede !important;
+		color: #ccc !important;
 	}
 }
 
 #article #body nav {
-	padding: calc(1em - 6px) 1em 1em 0;
+	padding: calc(1em - 7px) 1em 1em 0;
 }
 
 #article #body nav ul {
@@ -379,7 +385,7 @@ body:not(#article) p {
 }
 
 #article #body nav a {
-	padding: 0;
+	text-decoration: none;
 }
 
 #article #body nav a:hover {
