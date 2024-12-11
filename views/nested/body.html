@@ -1,14 +1,16 @@
 <title>{{.PageTitle}}</title>
 <nav>
 	<div id="left">
-		<img src="/assets/favicon.ico" />
-		<a href="/">{{.NavHome}}</a> 
+		<a id="title" href="/">
+			<img src="/assets/favicon.ico" />
+			<span>{{.NavHome}}</span>
+		</a> 
 		<a href="/articles">articles</a> 
 		<a href="/series">series</a>
 	</div>
 	<div id="right">
 		{{range $link := .NavLinks}}
-		<a class="rm" href="{{$link.Href}}">
+		<a href="{{$link.Href}}">
 			<span>{{$link.Text}}</span>
 			<img src="{{$link.ImageSrc}}" alt="{{$link.ImageAltText}}" />
 		</a>

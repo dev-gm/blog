@@ -23,7 +23,7 @@ a {
 	color: VisitedText;
 }
 
-a.rm {
+a.rm, body>nav #right a {
 	text-decoration: none;
 	color: inherit;
 }
@@ -34,6 +34,12 @@ body>nav {
 	justify-content: space-between;
 	width: 100%;
 	font-size: 110%;
+}
+
+body>nav #left #title {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-start;
 }
 
 body>nav #left a {
@@ -59,19 +65,16 @@ body>nav #right {
 
 body>nav img {
 	height: 1em;
+	padding: 3px;
 }
 
 body>nav #left img {
-	padding: 9px;
-}
-
-body>nav #right img {
-	padding: 3px;
+	padding-right: 0.25em !important;
 }
 
 body>nav #right a>span {
 	display: none;
-	padding-right: 0.35em;
+	padding-right: 0.25em;
 }
 
 body>nav #right a:hover>span {
@@ -88,12 +91,12 @@ a, label {
 	padding: 5px;
 }
 	
-a.rm:hover, label:hover {
+a.rm:hover, label:hover, body>nav a:hover {
 	background-color: #ddd;
 }
 
 @media (prefers-color-scheme: dark) {
-	a.rm:hover, label:hover {
+	a.rm:hover, label:hover, body>nav a:hover {
 		background-color: #353535;
 	}
 
@@ -121,6 +124,10 @@ a.rm:hover, label:hover {
 		margin: 0 22.5vw;
 		width: 55vw;
 	}
+}
+
+body:not(#article) p {
+	margin: 0.5em 0 !important;
 }
 
 #article h1,
@@ -161,14 +168,14 @@ a.rm:hover, label:hover {
 }
 
 #home .link * {
-	margin: 15px 0;
+	margin: 0.5em 0;
 }
 
 #home .link-flow *,
 #home-series label *,
 #home-series a *,
 #home-articles a * {
-	margin: 10px 0;
+	margin: 0.5em 0;
 }
 
 #home-series {
@@ -228,7 +235,7 @@ a.rm:hover, label:hover {
 }
 
 #article #info * {
-	margin: 10px;
+	margin: 0.5em;
 }
 
 #article #info h4 {
@@ -240,7 +247,7 @@ a.rm:hover, label:hover {
 }
 
 #article #series {
-	margin: 18px 0;
+	margin: 0.5em 0;
 	margin-bottom: 1.5em;
 	padding: 0;
 	min-width: 250px;
