@@ -20,6 +20,7 @@ import (
 	"github.com/gomarkdown/markdown/parser"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cache"
 	"github.com/gofiber/fiber/v2/middleware/earlydata"
 	"github.com/gofiber/fiber/v2/middleware/etag"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
@@ -58,9 +59,6 @@ var settings = fiber.Map{
 
 //go:embed views/*
 var viewsDir embed.FS
-
-//go:embed data/assets/*
-var assetsDir embed.FS
 
 type Article struct {
 	Path string
@@ -389,12 +387,15 @@ func main() {
 	app.Use(etag.New(etag.Config{
 		Weak: true,
 	}))
-	app.Use("/assets", filesystem.New(filesystem.Config{
-		Root: http.FS(assetsDir),
-		PathPrefix: "data/assets",
-		Browse: true,
-	}))
 	app.Use(earlydata.New())
+
+	app.Use("/assets", cache.New(cache.Config{
+		Expiration: 2 * time.Hour,
+		CacheControl: true,
+	}))
+	app.Use("/assets", filesystem.New(filesystem.Config{
+		Root: http.Dir("./data/assets"),
+	}))
 
 	app.Get("/", ServeHome)
 	app.Get("/articles", ServeArticleHome)
@@ -402,5 +403,5 @@ func main() {
 	app.Get("/series", ServeSeriesHome)
 	app.Get("/series/:series/:article", ServeSeriesArticle)
 
-	log.Fatal(app.Listen(":8080"))
+	log.Fatal(app.Listen(":8082"))
 }
