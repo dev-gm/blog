@@ -1,10 +1,12 @@
 [
 	{
+		"image": "/assets/favicon.ico",
 		"title": "series 1",
 		"description": "description 1",
 		"dirname": "series-1",
 		"parts": [
 			{
+				"image": "/assets/icons/codeberg.svg",
 				"title": "part 1",
 				"subtitle": "subtitle for part 1",
 				"datetime": "2024-12-05",

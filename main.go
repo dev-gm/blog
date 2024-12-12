@@ -319,40 +319,46 @@ func UpdateData() error {
 		}
 	}
 
-	dataLock.Lock()
-	defer dataLock.Unlock()
-
-	allArticles = slices.SortedStableFunc(maps.Values(articles), func(a1, a2 Article) int {
+	all_articles := slices.SortedStableFunc(maps.Values(articles), func(a1, a2 Article) int {
 		return int(a2.UnixMillis - a1.UnixMillis)
 	})
 
-	articlesMap = map[string]*Article{}
+	articles_map := map[string]*Article{}
 	articles_series_map := map[*Series][]*Article{}
-	for i := range allArticles {
-		if allArticles[i].Series == nil {
-			articlesMap[allArticles[i].Path] = &allArticles[i]
+	for i := range all_articles {
+		if all_articles[i].Series == nil {
+			articles_map[all_articles[i].Path] = &all_articles[i]
 		} else {
-			articles_series_map[allArticles[i].Series] =
-				append(articles_series_map[allArticles[i].Series], &allArticles[i])
+			articles_series_map[all_articles[i].Series] =
+				append(articles_series_map[all_articles[i].Series], &all_articles[i])
 		}
 	}
 
-	allSeries = slices.SortedStableFunc(slices.Values(series), func(s1, s2 Series) int {
+	all_series := slices.SortedStableFunc(slices.Values(series), func(s1, s2 Series) int {
 		return int(s2.UnixMillis - s1.UnixMillis)
 	})
-	seriesMap = map[string]*Series{}
-	for i := range allSeries {
-		seriesMap[allSeries[i].Path] = &allSeries[i]
-		allSeries[i].PartsMap = map[string]*Article{}
-		for _, article_ptr := range articles_series_map[series_ptrs[allSeries[i].Path]] {
-			allSeries[i].Parts = append(allSeries[i].Parts, article_ptr)
-			allSeries[i].PartsMap[article_ptr.Path] = article_ptr
-			article_ptr.Series = &allSeries[i]
+	series_map := map[string]*Series{}
+	for i := range all_series {
+		series_map[all_series[i].Path] = &all_series[i]
+		all_series[i].PartsMap = map[string]*Article{}
+		for _, article_ptr := range articles_series_map[series_ptrs[all_series[i].Path]] {
+			all_series[i].Parts = append(all_series[i].Parts, article_ptr)
+			all_series[i].PartsMap[article_ptr.Path] = article_ptr
+			article_ptr.Series = &all_series[i]
 		}
-		slices.SortStableFunc(allSeries[i].Parts, func(a1, a2 *Article) int {
+		slices.SortStableFunc(all_series[i].Parts, func(a1, a2 *Article) int {
 			return int(a1.UnixMillis - a2.UnixMillis)
 		})
 	}
+
+	dataLock.Lock()
+	defer dataLock.Unlock()
+
+	allArticles = all_articles
+	articlesMap = articles_map
+
+	allSeries = all_series
+	seriesMap = series_map
 
 	log.Print("Updated data successfully")
 
