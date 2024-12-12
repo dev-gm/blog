@@ -8,6 +8,7 @@ import (
 	"maps"
 	"net/http"
 	"os"
+	"regexp"
 	"slices"
 	"strings"
 	"sync"
@@ -185,13 +186,11 @@ type RawSeries struct {
 	Parts []RawArticle `json:"parts"`
 }
 
+var rePath *regexp.Regexp
+
 func PathFromTitle(title string) string {
-	trimmed := []string{}
-	for _, p := range strings.Split(title, "-") {
-		trimmed = append(trimmed, strings.Trim(p, " -/"))
-	}
-	return strings.ToLower(
-		strings.ReplaceAll(strings.Join(trimmed, "-"), " ", "-"))
+	return strings.ToLower(strings.Trim(
+		rePath.ReplaceAllString(title, "-"), "-"))
 }
 
 func MdToArticle(md []byte) []byte {
@@ -366,6 +365,8 @@ func UpdateData() error {
 }
 
 func main() {
+	rePath, _ = regexp.Compile("[^a-zA-Z0-9]+")
+
 	go UpdateData()
 
 	control := fiber.New()
