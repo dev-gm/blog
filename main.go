@@ -171,6 +171,7 @@ func ServeSeriesArticle(c *fiber.Ctx) error {
 }
 
 type RawArticle struct {
+	Ignore bool `json:"ignore"`
 	Title string `json:"title"`
 	Subtitle string `json:"subtitle"`
 	Datetime string `json:"datetime"`
@@ -178,6 +179,7 @@ type RawArticle struct {
 }
 
 type RawSeries struct {
+	Ignore bool `json:"ignore"`
 	Title string `json:"title"`
 	Description string `json:"description"`
 	Dirname string `json:"dirname"`
@@ -287,6 +289,9 @@ func UpdateData() error {
 
 	articles := map[string]Article{}
 	for _, raw := range raw_articles {
+		if raw.Ignore {
+			continue
+		}
 		article := raw.ToArticle(nil)
 		articles[article.Path] = article
 	}
@@ -307,6 +312,9 @@ func UpdateData() error {
 	series := []Series{}
 	series_ptrs := map[string]*Series{}
 	for i, raw := range raw_series {
+		if raw.Ignore {
+			continue
+		}
 		s := raw.ToSeries()
 		series = append(series, s)
 		series_ptrs[s.Path] = &series[i]
@@ -373,9 +381,10 @@ func main() {
 		if err != nil {
 			c.SendStatus(500)
 			return c.SendString("Failed to update data")
+		} else {
+			c.SendStatus(200)
+			return c.SendString("Updated data successfully")
 		}
-		c.SendStatus(200)
-		return c.SendString("Updated data successfully")
 	})
 	go control.Listen(":8081")
 
