@@ -319,6 +319,9 @@ func UpdateData() error {
 		series = append(series, s)
 		series_ptrs[s.Path] = &series[i]
 		for _, a := range raw.Parts {
+			if a.Ignore {
+				continue
+			}
 			article := a.ToArticle(&series[i])
 			articles[s.Path + "/" + article.Path] = article
 		}
